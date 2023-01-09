@@ -53,7 +53,7 @@ internal static class MockHttpMessageHandler<T>
             .Protected()
             .Setup<Task<HttpResponseMessage>>(
                 "SendAsync",
-                httpRequestMessage
+                ItExpr.IsAny<HttpRequestMessage>(),
                 ItExpr.IsAny<CancellationToken>()
             )
             .ReturnsAsync(mockResponse);
