@@ -60,6 +60,6 @@ public class TestUsersService
         var result = await sut.GetAllUsers();
 
         // Assert
-        result.Count.Should().Be(0);
+        result.Count.Should().Be(expectedResponse.Count);
     }
 }
