@@ -14,7 +14,8 @@ public class TestUsersService
     public async Task GetAllUsers_WhenCalled_InvokesHttpGetRequest() {
         // Arrange
         var expectedResponse = UsersFixtures.GetTestUsers;
-        var handlerMock = MockHttpMessageHandler<User>.SetupBasicGetResourceList(expectedResponse);
+        var handlerMock = MockHttpMessageHandler<User>
+            .SetupBasicGetResourceList(expectedResponse);
         var httpClient = new HttpClient(handlerMock.Object);
         var sut = new UsersService(httpClient);
 
@@ -33,9 +34,25 @@ public class TestUsersService
     }
 
     [Fact]
-    public async Task GetAllUsers_WhenCalled_ReturnsListOfUsers() {
+    public async Task GetAllUsers_WhenHits404_ReturnsEmptyListOfUsers() {
         // Arrange
         var handlerMock = MockHttpMessageHandler<User>.SetupReturn404();
+        var httpClient = new HttpClient(handlerMock.Object);
+        var sut = new UsersService(httpClient);
+
+        // Act
+        var result = await sut.GetAllUsers();
+
+        // Assert
+        result.Count.Should().Be(0);
+    }
+
+    [Fact]
+    public async Task GetAllUsers_WhenCalled_ReturnsListOfUsersOfExpectedSize() {
+        // Arrange
+        var expectedResponse = UsersFixtures.GetTestUsers;
+        var handlerMock = MockHttpMessageHandler<User>
+            .SetupBasicGetResourceList(expectedResponse);
         var httpClient = new HttpClient(handlerMock.Object);
         var sut = new UsersService(httpClient);
 
