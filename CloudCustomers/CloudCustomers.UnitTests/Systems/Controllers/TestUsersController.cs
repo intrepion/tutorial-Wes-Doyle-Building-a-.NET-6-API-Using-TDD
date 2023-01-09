@@ -1,3 +1,5 @@
+using CloudCustomers.API.Controllers;
+
 namespace CloudCustomers.UnitTests.Systems.Controllers;
 
 public class TestUsersController
